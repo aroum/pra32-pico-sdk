@@ -6,7 +6,7 @@
 
 ## PRA32-U with Panel (Optional)
 
-![PRA32-U with Panel (Grove System)](./pra32-u-with-panel-grove-system.jpg)
+![PRA32-U with Panel (Grove System)](pics/pra32-u-with-panel-grove-system.jpg)
 
 - Features
     - Edit and display parameters by panel operation
@@ -74,7 +74,7 @@
 
 ### Circuit Diagram
 
-![Circuit Diagram](./pra32-u-with-panel-circuit-diagram.png)
+![Circuit Diagram](pics/pra32-u-with-panel-circuit-diagram.png)
 
 - This image was created with Fritzing.
 
@@ -84,4 +84,4 @@
 - Tested with a breadboard, GY-PCM5102 (PCM5102A I2S DAC Module), 3 SWs, 3 VRs, and a OLED Display
     - An connection between Raspberry Pico's Mute Off Pin and GY-PCM5102's XSMT is omitted
 
-![PRA32-U with Panel (Bread Board)](./pra32-u-with-panel-breadboard.jpg)
+![PRA32-U with Panel (Bread Board)](pics/pra32-u-with-panel-breadboard.jpg)
