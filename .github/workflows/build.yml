@@ -53,8 +53,8 @@ jobs:
           
           # Helper function to extract size by section name
           get_size() {
-              local val=$(echo "$MAP_DATA" | grep -E "^\.$1" | awk '{print $2}' | head -n 1)
-              echo ${val:-0}
+              local val=$(echo "$MAP_DATA" | grep -E "^\.${1}[[:space:]]" | awk '{print $2}')
+              if [ -z "$val" ]; then echo 0; else echo $val; fi
           }
 
           # Extract specific section values
@@ -75,20 +75,20 @@ jobs:
           FLASH_PCT=$(awk "BEGIN {printf \"%.2f\", ($TOTAL_FLASH * 100 / $MAX_FLASH)}")
 
           echo -e "\033[0;33m1. Flash (Non-volatile Memory)\033[0m"
-          printf "   .text:   %12'd bytes\n" $TEXT
-          printf "   .rodata: %12'd bytes\n" $RODATA
-          printf "   .data:   %12'd bytes\n" $DATA
+          printf "   .text:   %12d bytes\n" $TEXT
+          printf "   .rodata: %12d bytes\n" $RODATA
+          printf "   .data:   %12d bytes\n" $DATA
           echo -e "   -------------------------------------------"
           echo -e "   Total Flash Usage: \033[0;32m$((TOTAL_FLASH / 1024)) KB\033[0m (~$FLASH_PCT% of 16MB)"
 
           echo -e "\n\033[0;33m2. RAM (Operating Memory)\033[0m"
-          printf "   .data:   %12'd bytes\n" $DATA
-          printf "   .bss:    %12'd bytes\n" $BSS
-          printf "   .stack:  %12'd bytes\n" $STACK
+          printf "   .data:   %12d bytes\n" $DATA
+          printf "   .bss:    %12d bytes\n" $BSS
+          printf "   .stack:  %12d bytes\n" $STACK
           echo -e "   -------------------------------------------"
           echo -e "   Total RAM Usage:   \033[0;32m$((TOTAL_RAM / 1024)) KB\033[0m out of 264 KB"
           echo -e "   Remaining RAM:     $(((MAX_RAM - TOTAL_RAM) / 1024)) KB\n"
-      
+
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
