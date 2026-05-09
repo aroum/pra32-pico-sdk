@@ -34,11 +34,16 @@ jobs:
 
       - name: Generate Memory Report
         run: |
+          # Make the script executable
           chmod +x build_all.sh
-          # Build is already done by the action, but build_all.sh -s will find it 
-          # if the build directory name matches.
-          # The action uses 'build' by default. My script uses 'build_${BOARD_NAME}'.
-          # I'll just run build_all.sh -s -b ${{ matrix.board }}
+          
+          # Provide the SDK path to the script so it doesn't fail during CMake configuration
+          # The action usually downloads the SDK to this specific path
+          export PICO_SDK_PATH=${{ github.workspace }}/_deps/pico_sdk-src
+          
+          # Run the script with -s (size report) and -b (board name)
+          # Note: This might trigger a re-build if the script's build folder 
+          # differs from the Action's default 'build' folder.
           ./build_all.sh -b ${{ matrix.board }} -s
       
       - name: Upload Artifact
