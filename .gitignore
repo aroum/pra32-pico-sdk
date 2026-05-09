@@ -29,4 +29,6 @@
 
 # Others
 *.wav
-DigitalSynthVRA8U/build/*
+**/build*
+pico-pra32-u/.DS_Store
+/pico-pra32-u
