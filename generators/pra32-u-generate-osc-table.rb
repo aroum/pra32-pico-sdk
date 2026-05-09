@@ -15,7 +15,7 @@ def freq_from_note_number(note_number, pr = false)
   return freq
 end
 
-$file.printf("uint32_t g_osc_freq_table[] = {\n  ")
+$file.printf("static const uint32_t g_osc_freq_table[] = {\n  ")
 (NOTE_NUMBER_MIN..NOTE_NUMBER_MAX).each do |note_number|
   freq = freq_from_note_number(note_number, true)
 
@@ -31,7 +31,7 @@ end
 $file.printf("};\n\n")
 
 max_tune_rate = -Float::INFINITY
-$file.printf("int16_t g_osc_tune_table[] = {\n  ")
+$file.printf("static const int16_t g_osc_tune_table[] = {\n  ")
 (0..(1 << OSC_TUNE_TABLE_STEPS_BITS) - 1).each do |i|
   tune_rate = ((2.0 ** ((i - (1 << (OSC_TUNE_TABLE_STEPS_BITS - 1))) / (12.0 * (1 << OSC_TUNE_TABLE_STEPS_BITS)))) *
                (1 << OSC_TUNE_DENOMINATOR_BITS) / 1.0).round -
@@ -50,7 +50,7 @@ end
 $file.printf("};\n\n")
 
 def generate_osc_wave_table(name, last, amp)
-  $file.printf("int16_t g_osc_#{name}_wave_table_h%d[] = {\n  ", last)
+  $file.printf("static const int16_t g_osc_#{name}_wave_table_h%d[] = {\n  ", last)
   (0..(1 << OSC_WAVE_TABLE_SAMPLES_BITS)).each do |n|
     level = 0
     nn = n
@@ -141,7 +141,7 @@ generate_osc_wave_table("sine", 1, 1.0) do |n, k|
 end
 
 def generate_osc_wave_tables_array(name, last = 127)
-  $file.printf("int16_t* g_osc_#{name}_wave_tables[] = {\n  ")
+  $file.printf("static const int16_t* const g_osc_#{name}_wave_tables[] = {\n  ")
   $osc_harmonics_restriction_table.each_with_index do |freq, idx|
     $file.printf("g_osc_#{name}_wave_table_h%-3d,", [last_harmonic(freq), last].min)
     if idx == DATA_BYTE_MAX
@@ -160,7 +160,7 @@ generate_osc_wave_tables_array("triangle")
 generate_osc_wave_tables_array("square")
 generate_osc_wave_tables_array("sine", 1)
 
-$file.printf("int32_t g_portamento_coef_table[] = {\n  ")
+$file.printf("static const int32_t g_portamento_coef_table[] = {\n  ")
 (0..127).each do |i|
   time = i
   portamento_coef = (0.5 ** (1.0 / ((0.1 / 10.0) * (SAMPLING_RATE / 4) * (10.0 ** ((time - 64.0) / 32.0)))) * 0x40000000).round

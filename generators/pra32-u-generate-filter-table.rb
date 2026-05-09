@@ -7,7 +7,7 @@ $file.printf("#pragma once\n\n")
 OCTAVES = 10
 
 def generate_filter_lpf_table(res_id, name, q)
-  $file.printf("int32_t g_filter_lpf_table_%s[] = {\n  ", name)
+  $file.printf("static const int32_t g_filter_lpf_table_%s[] = {\n  ", name)
   (0..DATA_BYTE_MAX * 2 + 1).each do |i|
     f_idx = [[-2, i - 1 * 2].max, 252].min
     f_0 = (2.0 ** ((f_idx / 2.0) / (120.0 / OCTAVES))) * ((A4_FREQ * 2.0) * 16.0) * 2.0 / (2.0 ** (OCTAVES.to_f + 1.0))
@@ -47,7 +47,7 @@ MAX_RES_ID = 14
   generate_filter_lpf_table(res_id, res_id.to_s, Math.sqrt(2.0) ** ((res_id - 2.0) / 2.0))
 end
 
-$file.printf("int32_t* g_filter_tables[] = {\n  ")
+$file.printf("static const int32_t* const g_filter_tables[] = {\n  ")
 (0..16).each do |res_index|
   res_id = [[res_index - 1, 0].max, MAX_RES_ID].min
   $file.printf("g_filter_lpf_table_%-2d,", res_id)
@@ -61,7 +61,7 @@ $file.printf("int32_t* g_filter_tables[] = {\n  ")
 end
 $file.printf("};\n\n")
 
-$file.printf("int16_t g_filter_gain_tables[] = {\n  ")
+$file.printf("static const int16_t g_filter_gain_tables[] = {\n  ")
 (0..16).each do |res_index|
   res_id = [[res_index - 1, 0].max, MAX_RES_ID].min
   gain = ((1 << (FILTER_TABLE_FRACTION_BITS - 16)) * 1.0 / (2.0 ** (res_id / 12.0))).floor

@@ -4,7 +4,7 @@ $file = File.open("pra32-u-eg-table.h", "w")
 
 $file.printf("#pragma once\n\n")
 
-$file.printf("int32_t g_eg_attack_release_coef_table[] = {\n  ")
+$file.printf("static const int32_t g_eg_attack_release_coef_table[] = {\n  ")
 (0..127 + 16).each do |i|
   time = i
   eg_coef = (0.5 ** (1.0 / ((0.2 / 10.0) * (SAMPLING_RATE / 4) * (10.0 ** ((time - 64.0) / 32.0)))) * 0x40000000).round
@@ -20,7 +20,7 @@ $file.printf("int32_t g_eg_attack_release_coef_table[] = {\n  ")
 end
 $file.printf("};\n\n")
 
-$file.printf("int32_t g_eg_decay_coef_table[] = {\n  ")
+$file.printf("static const int32_t g_eg_decay_coef_table[] = {\n  ")
 (0..127).each do |i|
   time = i
   eg_coef = (0.5 ** (1.0 / ((0.2 / 10.0) * (SAMPLING_RATE / 4) * (10.0 ** ((time - 64.0) / 32.0)))) * 0x40000000).round
