@@ -30,7 +30,7 @@ jobs:
         uses: samyarsadat/Pico-Build-Action@v1
         with:
           source_dir: "."
-          cmake_args: "-DCURRENT_BOARD=${{ matrix.id }}"
+          cmake_args: "-DCURRENT_BOARD=${{ matrix.id }} -DCMAKE_CXX_FLAGS='-std=c++17'"
 
       - name: Generate Memory Report
         run: |
