@@ -1,0 +1,41 @@
+.program audio_i2s
+.side_set 2
+
+; Side set:
+; bit 0: BCLK
+; bit 1: LRCLK
+
+    pull noblock   side 0b01 ; Pull from FIFO, LRCLK=0 (Left), BCLK=0
+    set x, 14      side 0b01 ; 16 bits per channel, 1 already handled?
+left_loop:
+    out pins, 1    side 0b00 [1] ; Shift bit, BCLK=0 -> 1
+    jmp x-- left_loop side 0b01 [1]
+
+    out pins, 1    side 0b10 [1] ; Last bit of Left, switch LRCLK
+    set x, 14      side 0b11
+right_loop:
+    out pins, 1    side 0b10 [1]
+    jmp x-- right_loop side 0b11 [1]
+    out pins, 1    side 0b00 [1] ; Last bit of Right
+
+% c-sdk {
+static inline void audio_i2s_program_init(PIO pio, uint sm, uint offset, uint data_pin, uint bclk_pin) {
+    pio_sm_config c = audio_i2s_program_get_default_config(offset);
+
+    sm_config_set_out_pins(&c, data_pin, 1);
+    sm_config_set_sideset_pins(&c, bclk_pin);
+
+    pio_gpio_init(pio, data_pin);
+    pio_gpio_init(pio, bclk_pin);     // BCLK
+    pio_gpio_init(pio, bclk_pin + 1); // LRCLK
+
+    pio_sm_set_consecutive_pindirs(pio, sm, data_pin, 1, true);
+    pio_sm_set_consecutive_pindirs(pio, sm, bclk_pin, 2, true);
+
+    sm_config_set_out_shift(&c, false, true, 32);
+    sm_config_set_fifo_join(&c, PIO_FIFO_JOIN_TX);
+
+    pio_sm_init(pio, sm, offset, &c);
+    pio_sm_set_enabled(pio, sm, true);
+}
+%}

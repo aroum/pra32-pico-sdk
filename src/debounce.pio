@@ -1,0 +1,58 @@
+.program debounce
+
+; Sample up to 10 pins continuously, but only push when the state changes and is stable.
+; Wait, checking 10 pins for stability in PIO is hard because we need to compare all 10 bits.
+; A simpler approach: The PIO just reads the 10 pins at a slow rate (e.g., 100Hz) and pushes.
+; But let's do a state-change-push with debounce in PIO:
+; x = new state, y = old state
+; OSR = delay count
+
+.wrap_target
+start:
+    mov x, pins
+    jmp x!=y, changed
+    jmp start
+
+changed:
+    ; State changed, wait for debounce period (stored in OSR)
+    mov x, osr
+delay_loop:
+    jmp x--, delay_loop
+    
+    ; Re-sample
+    mov x, pins
+    
+    ; If it's still different from Y, update Y and push
+    jmp x!=y, update
+    jmp start
+    
+update:
+    mov y, x
+    mov isr, x
+    push noblock
+.wrap
+
+
+% c-sdk {
+static inline void debounce_program_init(PIO pio, uint sm, uint offset, uint pin_base, uint pin_count, float clk_div) {
+    pio_sm_config c = debounce_program_get_default_config(offset);
+    
+    sm_config_set_in_pins(&c, pin_base);
+    sm_config_set_in_shift(&c, false, false, 32);
+    
+    // Initialize pins
+    for(uint i=0; i<pin_count; i++) {
+        pio_gpio_init(pio, pin_base + i);
+        gpio_pull_up(pin_base + i); // Or pull down depending on hardware
+    }
+    
+    sm_config_set_clkdiv(&c, clk_div);
+    pio_sm_init(pio, sm, offset, &c);
+    
+    // Initialize OSR with debounce delay (e.g. 1000 cycles)
+    pio_sm_put_blocking(pio, sm, 1000);
+    pio_sm_exec(pio, sm, pio_encode_pull(false, false));
+    
+    pio_sm_set_enabled(pio, sm, true);
+}
+%}
