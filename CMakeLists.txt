@@ -22,6 +22,9 @@ else()
     set(PROJECT_NAME_STR "pra32")
 endif()
 
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
 project(${PROJECT_NAME_STR} C CXX ASM)
 
 pico_sdk_init()
