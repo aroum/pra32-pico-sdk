@@ -1,3 +1,0 @@
-[submodule "include/u8g2"]
-	path = include/u8g2
-	url = https://github.com/olikraus/u8g2.git
