@@ -242,7 +242,7 @@ graph LR
 
 ### Circuit Diagram (Simple Circuit for PWM Audio)
 
-![Circuit Diagram](./pra32-u-pwm-audio-circuit-diagram.png)
+![Circuit Diagram](pics/pra32-u-pwm-audio-circuit-diagram.png)
 
 - This image was created with Fritzing.
 - Adding 10 uF electrolytic capacitors (AC coupling capacitors) will cut the DC components of the audio outputs.
@@ -252,7 +252,7 @@ graph LR
 
 ### Actual Wiring Diagram (Simple Circuit for PWM Audio)
 
-![Actual Wiring Diagram](./pra32-u-pwm-audio-bread-board.png)
+![Actual Wiring Diagram](pics/pra32-u-pwm-audio-bread-board.png)
 
 - This image was created with Fritzing.
 
