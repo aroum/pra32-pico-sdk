@@ -77,7 +77,23 @@ void led_driver_update(void) {
                     if (f1_pressed && i < 8) {
                         if (chord_type == (chord_type_t)i) { r = 255; g = 255; b = 0; } else { r = 20; g = 20; b = 0; }
                     } else if (i < 7) {
-                        r = pressed ? 255 : 20; g = r; b = r;
+                        bool is_hold_active = ui_state_piano_is_hold_active();
+                        uint8_t hold_note = ui_state_piano_get_hold_note();
+                        const uint8_t scale[7] = {0, 2, 4, 5, 7, 9, 11};
+
+                        bool is_held = is_hold_active && (hold_note == octave + scale[i]);
+                        bool is_sharp_held = false;
+                        if (is_hold_active && hold_note != 255) {
+                            if (i > 0 && hold_note == octave + scale[i-1] + 1 && scale[i] == scale[i-1] + 2) is_sharp_held = true;
+                            if (i < 6 && hold_note == octave + scale[i] + 1 && scale[i+1] == scale[i] + 2) is_sharp_held = true;
+                        }
+
+                        if (pressed || is_held || is_sharp_held) {
+                            if (is_hold_active && (is_held || is_sharp_held)) { r = 0; g = 0; b = 255; }
+                            else { r = 255; g = 255; b = 255; }
+                        } else {
+                            r = 20; g = 20; b = 20;
+                        }
                     } else if (i == 7) {
                         if (octave == 60) { r = 0; g = 255; b = 0; }
                         else if (octave > 60) { float t = (float)(octave - 60) / 48; r = (uint8_t)(255 * t); g = (uint8_t)(255 * (1.0f - t)); }

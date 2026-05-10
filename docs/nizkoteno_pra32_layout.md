@@ -10,7 +10,9 @@ c, d, e, f,
 g, a, b, oct~ (Green=Mid, Red=High, Blue=Low),
          f1/Chord (Pink when active), f2/Params (Blue)
 
-f1 + f2 = back to SEQ mode
+f1 + f2 = Toggle Hold mode (monophonic, 1 note max)
+* Note stays on until pressed again or hold is disabled.
+* Switching to SEQ mode automatically disables hold.
 
 C + D = C#
 D + E = D#

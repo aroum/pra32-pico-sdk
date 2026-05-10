@@ -27,6 +27,8 @@ static param_state_t current_param_state = PARAM_STATE_SELECT;
 static uint8_t current_param_page = 0;
 static uint8_t last_param_value = 0;
 static uint32_t param_display_timer = 0;
+static bool piano_hold_active = false;
+static uint8_t piano_hold_note = 255;
 
 // Sequencer edit state
 uint8_t editing_step_idx = 0;
@@ -399,6 +401,7 @@ bool ui_state_group_has_page2(int group) {
 void ui_state_init(void) {
     current_state = UI_STATE_PIANO; previous_button_states = 0; base_octave_note = 60;
     current_chord_type = CHORD_OFF; current_param_state = PARAM_STATE_SELECT; current_param_page = 0;
+    piano_hold_active = false; piano_hold_note = 255;
     sequencer_init();
 }
 
@@ -411,6 +414,8 @@ param_state_t ui_state_get_param_state(void) { return current_param_state; }
 uint8_t ui_state_get_param_page(void) { return current_param_page; }
 uint8_t ui_state_get_last_param_value(void) { return last_param_value; }
 uint32_t ui_state_get_param_timer(void) { return param_display_timer; }
+bool ui_state_piano_is_hold_active(void) { return piano_hold_active; }
+uint8_t ui_state_piano_get_hold_note(void) { return piano_hold_note; }
 
 // Flash blink state
 static uint8_t flash_blink_pad = 255;
@@ -462,7 +467,17 @@ void ui_state_process_buttons(uint32_t button_states) {
     bool f2_pressed = is_pad_pressed(button_states, BTN_PAD_10);
 
     switch (current_state) {
-        case UI_STATE_PIANO:
+        case UI_STATE_PIANO: {
+            bool f1_f2_combo = (f1_pressed && is_pad_just_pressed(pressed, BTN_PAD_10)) || (f2_pressed && is_pad_just_pressed(pressed, BTN_PAD_9));
+            if (f1_f2_combo) {
+                piano_hold_active = !piano_hold_active;
+                if (!piano_hold_active && piano_hold_note != 255) {
+                    handleNoteOff(g_midi_ch, piano_hold_note, 0);
+                    piano_hold_note = 255;
+                }
+                break;
+            }
+
             if (!f1_pressed && is_pad_just_pressed(pressed, BTN_PAD_8)) {
                 base_octave_note += 12; if (base_octave_note > 108) base_octave_note = 24;
             }
@@ -472,21 +487,54 @@ void ui_state_process_buttons(uint32_t button_states) {
                         current_chord_type = (chord_type_t)i;
             } else {
                 const uint8_t scale[7] = {0, 2, 4, 5, 7, 9, 11};
-                for (int i = 0; i < 7; i++) {
-                    logical_button_t pad = (logical_button_t)i;
-                    if (is_pad_just_pressed(pressed, pad)) handleNoteOn(g_midi_ch, base_octave_note + scale[i], 100);
-                    if (is_pad_just_released(changed, button_states, pad)) handleNoteOff(g_midi_ch, base_octave_note + scale[i], 0);
+                uint8_t current_note = 255;
+
+                // Detect sharps (combo priority)
+                if      (is_pad_pressed(button_states, BTN_PAD_1) && is_pad_pressed(button_states, BTN_PAD_2)) current_note = base_octave_note + 1;
+                else if (is_pad_pressed(button_states, BTN_PAD_2) && is_pad_pressed(button_states, BTN_PAD_3)) current_note = base_octave_note + 3;
+                else if (is_pad_pressed(button_states, BTN_PAD_4) && is_pad_pressed(button_states, BTN_PAD_5)) current_note = base_octave_note + 6;
+                else if (is_pad_pressed(button_states, BTN_PAD_5) && is_pad_pressed(button_states, BTN_PAD_6)) current_note = base_octave_note + 8;
+                else if (is_pad_pressed(button_states, BTN_PAD_6) && is_pad_pressed(button_states, BTN_PAD_7)) current_note = base_octave_note + 10;
+                else {
+                    for (int i = 0; i < 7; i++) {
+                        if (is_pad_pressed(button_states, (logical_button_t)i)) {
+                            current_note = base_octave_note + scale[i];
+                            break;
+                        }
+                    }
+                }
+
+                if (piano_hold_active) {
+                    static uint8_t last_detected_note = 255;
+                    if (current_note != last_detected_note) {
+                        if (current_note != 255) {
+                            if (current_note == piano_hold_note) {
+                                handleNoteOff(g_midi_ch, piano_hold_note, 0);
+                                piano_hold_note = 255;
+                            } else {
+                                if (piano_hold_note != 255) handleNoteOff(g_midi_ch, piano_hold_note, 0);
+                                handleNoteOn(g_midi_ch, current_note, 100);
+                                piano_hold_note = current_note;
+                            }
+                        }
+                        last_detected_note = current_note;
+                    }
+                } else {
+                    static uint8_t piano_playing_note = 255;
+                    if (current_note != piano_playing_note) {
+                        if (piano_playing_note != 255) handleNoteOff(g_midi_ch, piano_playing_note, 0);
+                        if (current_note != 255) handleNoteOn(g_midi_ch, current_note, 100);
+                        piano_playing_note = current_note;
+                    }
                 }
             }
-            if (f1_pressed && is_pad_just_pressed(pressed, BTN_PAD_10)) {
-                current_state = UI_STATE_SEQ;
-                seq_page_combo_used = true;
-            }
+
             if (!f1_pressed && is_pad_just_pressed(pressed, BTN_PAD_10)) {
                 current_state = UI_STATE_PARAMS;
                 current_param_state = PARAM_STATE_SELECT;
             }
             break;
+        }
 
         // ----------------------------------------------------------------
         case UI_STATE_SEQ: {
@@ -678,6 +726,11 @@ void ui_state_process_buttons(uint32_t button_states) {
                 if (is_pad_just_pressed(pressed, BTN_PAD_10)) {
                     current_state = UI_STATE_SEQ;
                     seq_page_combo_used = true;
+                    if (piano_hold_active) {
+                        if (piano_hold_note != 255) handleNoteOff(g_midi_ch, piano_hold_note, 0);
+                        piano_hold_active = false;
+                        piano_hold_note = 255;
+                    }
                 }
             } else {
                 // Inside a group
