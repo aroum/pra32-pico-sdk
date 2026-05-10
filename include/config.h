@@ -3,7 +3,7 @@
 // ======================================================================
 // System Settings
 // ======================================================================
-#define CPU_SPEED_KHZ 150000
+#define CPU_SPEED_KHZ 170000
 #define VERSION_STRING "v3.3.2    "
 
 // Pico compatibility layer
@@ -19,7 +19,7 @@ typedef uint8_t byte;
 
 // Set the current board here
 #ifndef CURRENT_BOARD
-#define CURRENT_BOARD BOARD_PRA32
+#define CURRENT_BOARD BOARD_NIZKOTENO
 #endif
 
 // ======================================================================
@@ -69,7 +69,18 @@ static const uint8_t DIRECT_BUTTON_PINS[NUM_BUTTONS] = {9, 8, 6, 5, 10,
 // PWM Settings
 #define PWM_AUDIO_L_PIN 28
 #define PWM_AUDIO_R_PIN 29
-#endif // USE_PIO_AUDIO
+
+// --- Audio Quality ---
+// 1: Error Diffusion (Highest quality, best for Nizkoteno)
+// 0: Dithering (Standard quality)
+#define USE_PWM_AUDIO_ERROR_DIFFUSION 0
+
+// Internal PRA32-U driver mapping
+#define PRA32_U_USE_PWM_AUDIO_INSTEAD_OF_I2S
+#endif
+
+// Multi-core synth processing (Required for 4-voice polyphony)
+#define PRA32_U_USE_2_CORES_FOR_SIGNAL_PROCESSING
 
 #endif // CURRENT_BOARD == BOARD_NIZKOTENO
 
