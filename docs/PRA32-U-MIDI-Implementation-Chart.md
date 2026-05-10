@@ -102,6 +102,12 @@
 |                           118 | x             | o             | Program Change #14 by CC            |
 |                           119 | x             | o             | Program Change #15 by CC            |
 |                           111 | x             | x             | [Reserved]                          |
+|                               |               |               |                                     |
+|                            16 | x             | o             | Seq BPM [50-177 = val+50]           |
+|                            18 | x             | o             | Seq Division [1-8]                  |
+|                            22 | x             | o             | Seq Gate Length                     |
+|                            31 | x             | o             | Seq Swing                           |
+|                               |               |               |                                     |
 +-------------------------------+---------------+---------------+-------------------------------------+
 | Program                       | x             | o             |                                     |
 | Change       : True #         | ************* | 0-15          | Default 8                           |
