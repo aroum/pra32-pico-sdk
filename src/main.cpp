@@ -268,6 +268,7 @@ void handleStop() {
 // Control Panel Support Functions
 uint8_t getCurrentControllerValue(byte channel, byte number) {
     if (channel == g_midi_ch) {
+#if CURRENT_BOARD == BOARD_NIZKOTENO || CURRENT_BOARD == BOARD_OMSK
         if (number == SEQ_CC_BPM) return sequencer_get()->bpm;
         if (number == SEQ_CC_DIV) {
             static const uint8_t thr[] = {17, 35, 53, 71, 89, 107, 127};
@@ -277,6 +278,7 @@ uint8_t getCurrentControllerValue(byte channel, byte number) {
         }
         if (number == SEQ_CC_GATE) return sequencer_get()->gate_length;
         if (number == SEQ_CC_SWING) return sequencer_get()->swing;
+#endif
 
         return g_synth.current_controller_value(number);
     }
@@ -322,9 +324,11 @@ void core1_main() {
         if (now - last_ui_time >= 1000) { // UI/Sequencer update every 1ms
             last_ui_time = now;
             
+#if CURRENT_BOARD == BOARD_NIZKOTENO || CURRENT_BOARD == BOARD_OMSK
             button_driver_update();
             led_driver_update();
             sequencer_update(now);
+#endif
 
 #if CURRENT_BOARD == BOARD_PRA32
             PRA32_U_ControlPanel_update_analog_inputs(loop_counter);
