@@ -22,14 +22,14 @@ typedef enum {
 } param_state_t;
 
 typedef enum {
-    CHORD_OFF = 0,
-    CHORD_MAJOR,
+    CHORD_MAJOR = 0,
     CHORD_MINOR,
     CHORD_POWER,
     CHORD_MAJ7,
     CHORD_7,
     CHORD_M7,
     CHORD_DIM,
+    CHORD_OFF,
     NUM_CHORD_TYPES
 } chord_type_t;
 
