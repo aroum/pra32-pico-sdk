@@ -157,7 +157,7 @@ void led_driver_update(void) {
                         uint8_t gr = 0, gg = 0, gb = 0;
                         switch(p_state) {
                             case PARAM_STATE_OSC:  gr = 0;   gg = 255; gb = 255; break; // Cyan
-                            case PARAM_STATE_MIX:  gr = 255; gg = 255; gb = 0;   break; // Yellow (SEQ)
+                            case PARAM_STATE_SEQ:  gr = 255; gg = 255; gb = 0;   break; // Yellow (SEQ)
                             case PARAM_STATE_FILT: gr = 0;   gg = 255; gb = 0;   break; // Green
                             case PARAM_STATE_EG:   gr = 255; gg = 128; gb = 0;   break; // Orange
                             case PARAM_STATE_LFO:  gr = 0;   gg = 0;   gb = 255; break; // Blue

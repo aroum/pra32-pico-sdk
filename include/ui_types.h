@@ -12,7 +12,7 @@ typedef enum {
 typedef enum {
     PARAM_STATE_SELECT = 0,
     PARAM_STATE_OSC,
-    PARAM_STATE_MIX,
+    PARAM_STATE_SEQ,
     PARAM_STATE_FILT,
     PARAM_STATE_EG,
     PARAM_STATE_LFO,

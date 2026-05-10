@@ -692,6 +692,22 @@ void ui_state_process_buttons(uint32_t button_states) {
                 }
 
                 if (group >= 0 && group <= 7) {
+                    // Check for rel=decay combo: EG group, Page 0, (Pad 3+Pad 4 or Pad 7+Pad 8)
+                    // Note: Pad indices are 0-based, so Pad 3 is index 2, Pad 4 is index 3, etc.
+                    if (group == (PARAM_STATE_EG - PARAM_STATE_OSC) && current_param_page == 0) {
+                        bool plus_combo = is_pad_just_pressed(pressed, BTN_PAD_4) && is_pad_pressed(button_states, BTN_PAD_3);
+                        bool minus_combo = is_pad_just_pressed(pressed, BTN_PAD_8) && is_pad_pressed(button_states, BTN_PAD_7);
+                        if (plus_combo || minus_combo) {
+                            uint8_t current = getCurrentControllerValue(g_midi_ch, REL_EQ_DECAY);
+                            uint8_t next = (current >= 64) ? 0 : 127;
+                            handleControlChange(g_midi_ch, REL_EQ_DECAY, next);
+                            last_param_value = next;
+                            param_display_timer = 66;
+                            // Prevent the single button press from triggering
+                            pressed &= ~((1 << BTN_PAD_4) | (1 << BTN_PAD_8));
+                        }
+                    }
+
                     for (int i = 0; i < 8; i++) {
                         if (is_pad_just_pressed(pressed, (logical_button_t)i)) {
                             int8_t sign = pad_is_plus(i) ? +1 : -1;
