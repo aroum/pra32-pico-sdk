@@ -106,6 +106,11 @@ const uint8_t   AMP_VEL_SENS    = 63;
 
 const uint8_t   VOICE_ASGN_MODE = 108;
 
+const uint8_t   SEQ_CC_BPM      = 16;
+const uint8_t   SEQ_CC_DIV      = 18;
+const uint8_t   SEQ_CC_GATE     = 22;
+const uint8_t   SEQ_CC_SWING    = 31;
+
 
 
 

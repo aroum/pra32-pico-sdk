@@ -1,5 +1,6 @@
 #pragma once
 
+#include "config.h"
 #include "pra32-u-constants.h"
 
 #define INLINE inline __attribute__((always_inline))

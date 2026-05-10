@@ -20,3 +20,13 @@ uint8_t ui_state_get_param_page(void);
 uint8_t ui_state_get_last_param_value(void);
 uint32_t ui_state_get_param_timer(void);
 void ui_state_update_timers(void);
+bool ui_state_pad_has_param(uint8_t pad); // 0-7: true if pad has assignment in current group/page
+bool ui_state_group_has_page2(int group); // true if group has parameters on page 2
+
+uint8_t ui_state_get_flash_blink_pad(void);
+uint8_t ui_state_get_flash_blink_count(void);
+bool ui_state_get_flash_blink_is_error(void);
+bool ui_state_get_flash_blink_state(void);
+void ui_state_set_flash_blink(uint8_t pad, uint8_t count, bool is_error);
+
+bool ui_state_seq_edit_is_done_held(uint32_t button_states);

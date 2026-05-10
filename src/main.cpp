@@ -61,7 +61,10 @@ uint8_t g_midi_ch = MIDI_CHANNEL;
 // Definitions from config.h adapted for synth
 #define PRA32_U_VERSION                       VERSION_STRING
 #define PRA32_U_MIDI_CH                       MIDI_CHANNEL
-#define PRA32_U_USE_2_CORES_FOR_SIGNAL_PROCESSING
+
+#if USE_PWM_AUDIO_ERROR_DIFFUSION == 0
+#define PRA32_U_USE_PWM_AUDIO_DITHERING_INSTEAD_OF_ERROR_DIFFUSION
+#endif
 
 #if CURRENT_BOARD == BOARD_PRA32
 #if USE_CONTROL_PANEL
@@ -202,7 +205,27 @@ void handleNoteOff(byte channel, byte pitch, byte velocity) {
 
 void handleControlChange(byte channel, byte number, byte value) {
     if (channel == g_midi_ch) {
+#if CURRENT_BOARD == BOARD_NIZKOTENO || CURRENT_BOARD == BOARD_OMSK
+        if (number == SEQ_CC_BPM) {
+            sequencer_set_bpm(value);
+        } else if (number == SEQ_CC_DIV) {
+            sequencer_t *seq = sequencer_get();
+            // Mapping CC to 0-6 index
+            static const uint8_t thr[] = {17, 35, 53, 71, 89, 107, 127};
+            uint8_t idx = 6;
+            for (int i = 0; i < 7; i++) { if (value <= thr[i]) { idx = i; break; } }
+            seq->division = idx;
+            sequencer_set_bpm(seq->bpm);
+        } else if (number == SEQ_CC_GATE) {
+            sequencer_get()->gate_length = value;
+        } else if (number == SEQ_CC_SWING) {
+            sequencer_get()->swing = value;
+        } else {
+            g_synth.control_change(number, value);
+        }
+#else
         g_synth.control_change(number, value);
+#endif
     }
 }
 
@@ -245,6 +268,16 @@ void handleStop() {
 // Control Panel Support Functions
 uint8_t getCurrentControllerValue(byte channel, byte number) {
     if (channel == g_midi_ch) {
+        if (number == SEQ_CC_BPM) return sequencer_get()->bpm;
+        if (number == SEQ_CC_DIV) {
+            static const uint8_t thr[] = {17, 35, 53, 71, 89, 107, 127};
+            uint8_t idx = sequencer_get()->division;
+            if (idx > 6) idx = 6;
+            return thr[idx];
+        }
+        if (number == SEQ_CC_GATE) return sequencer_get()->gate_length;
+        if (number == SEQ_CC_SWING) return sequencer_get()->swing;
+
         return g_synth.current_controller_value(number);
     }
     return 0;
@@ -282,24 +315,24 @@ void core1_main() {
     uint32_t loop_counter = 0;
 
     while (1) {
-        boolean processed = g_synth.secondary_core_process();
-        if (processed) {
-            loop_counter++;
-            if (loop_counter >= 16 * 400) {
-                loop_counter = 0;
-            }
+        g_synth.secondary_core_process();
+
+        static uint32_t last_ui_time = 0;
+        uint32_t now = time_us_32();
+        if (now - last_ui_time >= 1000) { // UI/Sequencer update every 1ms
+            last_ui_time = now;
+            
+            button_driver_update();
+            led_driver_update();
+            sequencer_update(now);
 
 #if CURRENT_BOARD == BOARD_PRA32
             PRA32_U_ControlPanel_update_analog_inputs(loop_counter);
             PRA32_U_ControlPanel_update_display_buffer(loop_counter);
             PRA32_U_ControlPanel_update_display(loop_counter);
+            loop_counter++;
 #endif
         }
-#if CURRENT_BOARD == BOARD_NIZKOTENO || CURRENT_BOARD == BOARD_OMSK
-        button_driver_update();
-        led_driver_update();
-        sequencer_update(time_us_32());
-#endif
         tight_loop_contents();
     }
 }

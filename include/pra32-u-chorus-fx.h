@@ -1,6 +1,7 @@
 #pragma once
 
 #include "pra32-u-common.h"
+#include "pra32-u-lfo-table.h"
 
 class PRA32_U_ChorusFx {
   static const uint16_t DELAY_BUFF_SIZE = 512;
