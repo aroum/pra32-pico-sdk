@@ -1,0 +1,674 @@
+[
+  {
+    "name": "pra32"
+  },
+  [
+    {
+      "c": "#ffffff",
+      "p": "FLAT",
+      "a": 7
+    },
+    "C",
+    "D",
+    "E",
+    "F",
+    {
+      "c": "#cccccc",
+      "d": true
+    },
+    "<b>Piano</b>",
+    {
+      "x": 0.75,
+      "c": "#00f3ff"
+    },
+    "osc1 wave +",
+    "osc1 shape +",
+    "osc1 morph +",
+    "mix noise/sub +",
+    {
+      "c": "#cccccc",
+      "d": true
+    },
+    "<b>Osc 1</b>",
+    {
+      "x": 0.75,
+      "c": "#00f3ff"
+    },
+    "OSC",
+    {
+      "c": "#dee30b"
+    },
+    "SEQ",
+    {
+      "c": "#83fc65"
+    },
+    "FILT",
+    {
+      "c": "#ebad0e"
+    },
+    "EG",
+    {
+      "c": "#cccccc",
+      "d": true
+    },
+    "<b>Param</b>",
+    {
+      "x": 0.75,
+      "c": "#83fc65"
+    },
+    "filt cutoff +",
+    "filt res +",
+    "filt eg amt +",
+    "filt lfo amt +",
+    {
+      "c": "#cccccc",
+      "d": true
+    },
+    "<b>Filt 1</b>",
+    {
+      "x": 0.75,
+      "c": "#ebad0e"
+    },
+    "eg attk +",
+    "eg decay +",
+    "eg sus +",
+    "eg rel +",
+    {
+      "c": "#cccccc",
+      "d": true
+    },
+    "<b>EG 1</b>"
+  ],
+  [
+    {
+      "c": "#ffffff"
+    },
+    "G",
+    "A",
+    "B",
+    {
+      "c": "#24c935"
+    },
+    "OCT",
+    {
+      "x": 1.75,
+      "c": "#00f3ff"
+    },
+    "osc1 wave -",
+    "osc1 shape -",
+    "osc1 morph -",
+    "mix noise/sub -",
+    {
+      "x": 1.75,
+      "c": "#005beb"
+    },
+    "LFO",
+    {
+      "c": "#ff0000"
+    },
+    "AMP",
+    {
+      "c": "#fa00df"
+    },
+    "FX",
+    {
+      "c": "#ff6900"
+    },
+    "MISC",
+    {
+      "x": 1.75,
+      "c": "#83fc65"
+    },
+    "filt cutoff -",
+    "filt res -",
+    "filt eg amt -",
+    "filt lfo amt -",
+    {
+      "x": 1.75,
+      "c": "#ebad0e"
+    },
+    "eg attk -",
+    "eg decay -",
+    "eg sus -",
+    "eg rel -"
+  ],
+  [
+    {
+      "c": "#cccccc",
+      "f": 2,
+      "w": 2.5,
+      "d": true
+    },
+    "<p>Chord + Params > SEQ<p>C + D = C#; D + E = D#<p> F + G = F#; G + A = G# <p>A + B = A#",
+    {
+      "x": 0.5,
+      "c": "#ff0000",
+      "f": 3
+    },
+    "Chord",
+    {
+      "c": "#005beb"
+    },
+    "param",
+    {
+      "x": 3.75,
+      "c": "#ff0000"
+    },
+    "back",
+    {
+      "c": "#00f3ff"
+    },
+    "page",
+    {
+      "x": 3.75,
+      "c": "#fa00df"
+    },
+    "Piano",
+    {
+      "c": "#00f3ff"
+    },
+    "Seq",
+    {
+      "x": 3.75,
+      "c": "#ff0000"
+    },
+    "back",
+    {
+      "c": "#00f3ff"
+    },
+    "page",
+    {
+      "x": 3.75,
+      "c": "#ff0000"
+    },
+    "back",
+    {
+      "c": "#00f3ff"
+    },
+    "page"
+  ],
+  [
+    {
+      "y": 0.75,
+      "c": "#8a962a"
+    },
+    "MAJOR",
+    "MINOR",
+    "POWER",
+    "MAJ7",
+    {
+      "c": "#cccccc",
+      "d": true
+    },
+    "<b>Chord</b>",
+    {
+      "x": 0.75,
+      "c": "#00f3ff"
+    },
+    "osc2 wave +",
+    "osc2 coarse +",
+    "osc2 pitch +",
+    "mix osc1/2 +",
+    {
+      "c": "#cccccc",
+      "d": true
+    },
+    "<b>Osc 2</b>",
+    {
+      "x": 0.75,
+      "c": "#dee30b"
+    },
+    "seq BPM +",
+    "seq spead +",
+    "seq gate len +",
+    "seq swing +",
+    {
+      "c": "#cccccc",
+      "d": true
+    },
+    "<b>SEQ</b>",
+    {
+      "x": 0.75,
+      "c": "#83fc65"
+    },
+    "filt keytrk +",
+    "filt mode +",
+    "breath filt amt +",
+    {
+      "c": "#cccccc"
+    },
+    "",
+    {
+      "d": true
+    },
+    "<b>Filt 2</b>",
+    {
+      "x": 0.75,
+      "c": "#ebad0e"
+    },
+    "eg vel sens +",
+    "eg osc dst +",
+    "eg osc amt +",
+    "eg filt amt +",
+    {
+      "c": "#cccccc",
+      "d": true
+    },
+    "<b>EG 2</b>"
+  ],
+  [
+    {
+      "c": "#8a962a"
+    },
+    "7",
+    "M7",
+    "DIM",
+    "OFF",
+    {
+      "x": 1.75,
+      "c": "#00f3ff"
+    },
+    "osc2 wave -",
+    "osc2 coarse -",
+    "osc2 pitch -",
+    "mix osc1/2 -",
+    {
+      "x": 1.75,
+      "c": "#dee30b"
+    },
+    "seq BPM -",
+    "seq spead -",
+    "seq gate len -",
+    "seq swing -",
+    {
+      "x": 1.75,
+      "c": "#83fc65"
+    },
+    "filt keytrk -",
+    "filt mode -",
+    "breath filt amt -",
+    {
+      "c": "#cccccc"
+    },
+    "",
+    {
+      "x": 1.75,
+      "c": "#ebad0e"
+    },
+    "eg vel sens -",
+    "eg osc dst -",
+    "eg osc amt -",
+    "eg filt amt -"
+  ],
+  [
+    {
+      "x": 3,
+      "c": "#22c983"
+    },
+    "chord",
+    {
+      "c": "#005beb"
+    },
+    "Hold",
+    {
+      "x": 3.75,
+      "c": "#ff0000"
+    },
+    "back",
+    {
+      "c": "#dee30b"
+    },
+    "page",
+    {
+      "x": 3.75,
+      "c": "#ff0000"
+    },
+    "back",
+    {
+      "c": "#00f3ff"
+    },
+    "",
+    {
+      "x": 3.75,
+      "c": "#ff0000"
+    },
+    "back",
+    {
+      "c": "#dee30b"
+    },
+    "page",
+    {
+      "x": 3.75,
+      "c": "#ff0000"
+    },
+    "back",
+    {
+      "c": "#dee30b"
+    },
+    "page"
+  ],
+  [
+    {
+      "y": 0.75,
+      "c": "#ffffff"
+    },
+    "st1",
+    "st2",
+    "st3",
+    "st4",
+    {
+      "c": "#cccccc",
+      "d": true
+    },
+    "<b>Seq Step View</b>",
+    {
+      "x": 0.75,
+      "c": "#005beb"
+    },
+    "lfo wave +",
+    "lfo rate +",
+    "lfo depth +",
+    "lfo fade time +",
+    {
+      "c": "#cccccc",
+      "d": true
+    },
+    "<b>LFO 1</b>",
+    {
+      "x": 0.75,
+      "c": "#ff0000"
+    },
+    "amp attk +",
+    "amp decay +",
+    "amp sus +",
+    "amp rel +",
+    {
+      "c": "#cccccc",
+      "d": true
+    },
+    "<b>Amp 1</b>",
+    {
+      "x": 0.75,
+      "c": "#fa00df"
+    },
+    "delay feedback +",
+    "delay time +",
+    "delay mode",
+    {
+      "c": "#cccccc"
+    },
+    "",
+    {
+      "d": true
+    },
+    "<b>FX 1</b>",
+    {
+      "x": 0.75,
+      "c": "#ff6900"
+    },
+    "portamento +",
+    "voice mode +",
+    "pitch bend range +",
+    "preset +",
+    {
+      "c": "#cccccc",
+      "d": true
+    },
+    "<b>Misc</b>"
+  ],
+  [
+    {
+      "c": "#ffffff"
+    },
+    "st5",
+    "st6",
+    "st7",
+    "st8",
+    {
+      "x": 1.75,
+      "c": "#005beb"
+    },
+    "lfo wave -",
+    "lfo rate -",
+    "lfo depth -",
+    "lfo fade time -",
+    {
+      "x": 1.75,
+      "c": "#ff0000"
+    },
+    "amp attk -",
+    "amp decay -",
+    "amp sus -",
+    "amp rel -",
+    {
+      "x": 1.75,
+      "c": "#fa00df"
+    },
+    "delay feedback -",
+    "delay time -",
+    {
+      "c": "#cccccc"
+    },
+    "",
+    "",
+    {
+      "x": 1.75,
+      "c": "#ff6900"
+    },
+    "portamento -",
+    "voice mode -",
+    "pitch bend range -",
+    "preset -"
+  ],
+  [
+    {
+      "x": 3,
+      "c": "#ff0000",
+      "a": 4
+    },
+    "param\n\n\nstep edit",
+    {
+      "c": "#00f3ff"
+    },
+    "page\n\n\nstop step",
+    {
+      "x": 3.75,
+      "c": "#ff0000",
+      "a": 7
+    },
+    "back",
+    {
+      "c": "#00f3ff"
+    },
+    "page",
+    {
+      "x": 3.75,
+      "c": "#ff0000"
+    },
+    "back",
+    {
+      "c": "#00f3ff"
+    },
+    "page",
+    {
+      "x": 3.75,
+      "c": "#ff0000"
+    },
+    "back",
+    {
+      "c": "#00f3ff"
+    },
+    "page",
+    {
+      "x": 3.75,
+      "c": "#ff0000"
+    },
+    "back",
+    {
+      "c": "#00f3ff"
+    },
+    ""
+  ],
+  [
+    {
+      "y": 0.75,
+      "c": "#ffffff"
+    },
+    "C",
+    "D",
+    "E",
+    "F",
+    {
+      "c": "#cccccc",
+      "d": true
+    },
+    "<b>Seq Step Edit</b>",
+    {
+      "x": 0.75,
+      "c": "#005beb"
+    },
+    "lfo osc dst +",
+    "lfo osc amt +",
+    "lfo filt amt +",
+    {
+      "c": "#cccccc"
+    },
+    "",
+    {
+      "d": true
+    },
+    "<b>LFO 2</b>",
+    {
+      "x": 0.75,
+      "c": "#ff0000"
+    },
+    "amp vel sens +",
+    "amp gain +",
+    "breath amp mod",
+    {
+      "c": "#cccccc"
+    },
+    "",
+    {
+      "d": true
+    },
+    "<b>Amp 2</b>",
+    {
+      "x": 0.75,
+      "c": "#fa00df"
+    },
+    "chorus rate +",
+    "chorus depth +",
+    "chorus mix +",
+    {
+      "c": "#cccccc"
+    },
+    "",
+    {
+      "d": true
+    },
+    "<b>FX 2</b>",
+    {
+      "x": 0.75,
+      "c": "#00f3ff"
+    },
+    "page 1",
+    {
+      "c": "#dee30b"
+    },
+    "page 2",
+    {
+      "c": "#83fc65"
+    },
+    "page 3",
+    {
+      "c": "#ebad0e"
+    },
+    "page 4"
+  ],
+  [
+    {
+      "c": "#ffffff"
+    },
+    "G",
+    "A",
+    "B",
+    {
+      "c": "#24c935"
+    },
+    "OCT",
+    {
+      "x": 1.75,
+      "c": "#005beb"
+    },
+    "lfo osc dst -",
+    "lfo osc amt -",
+    "lfo filt amt -",
+    {
+      "c": "#cccccc"
+    },
+    "",
+    {
+      "x": 1.75,
+      "c": "#ff0000"
+    },
+    "amp vel sens -",
+    "amp gain -",
+    {
+      "c": "#cccccc"
+    },
+    "",
+    "",
+    {
+      "x": 1.75,
+      "c": "#fa00df"
+    },
+    "chorus rate -",
+    "chorus depth -",
+    "chorus mix -",
+    {
+      "c": "#cccccc"
+    },
+    ""
+  ],
+  [
+    {
+      "x": 3,
+      "c": "#ffffff",
+      "a": 4
+    },
+    "back\n\n\nchord",
+    {
+      "c": "#00f3ff",
+      "a": 7
+    },
+    "page",
+    {
+      "x": 3.75,
+      "c": "#ff0000"
+    },
+    "back",
+    {
+      "c": "#dee30b"
+    },
+    "page",
+    {
+      "x": 3.75,
+      "c": "#ff0000"
+    },
+    "back",
+    {
+      "c": "#dee30b"
+    },
+    "page",
+    {
+      "x": 3.75,
+      "c": "#fa00df"
+    },
+    "back",
+    {
+      "c": "#dee30b"
+    },
+    "page"
+  ]
+]
