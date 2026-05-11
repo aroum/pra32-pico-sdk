@@ -10,27 +10,3 @@ pad_13,  pad_14, pad_15, pad_16
  C#, E,  G,  A#,
  D,  F,  G#,  B
 OCT-, OCT+, f1,f2,
-
-Page Piano Chord Seq Step view Seq Edit view
-
-
-
-
-
-
-Seq
-Param 
-Filt1
-LFO1
-Filt2
-LFO2
-FX1
-FX2
-EG1
-EG2
-
-AMP 1
-AMP 2
-OSC 1
-OSC 2
-MISC

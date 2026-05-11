@@ -1,5 +1,5 @@
 # Nizkoteno PRA32
-![KLE](KLE/nizkoteno_pra32.svg)
+![KLE](KLE/nizkoteno_pra32.jpg)
 
 ## Buttons
 
