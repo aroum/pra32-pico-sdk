@@ -178,8 +178,16 @@
     },
     "page",
     {
-      "x": 3.75,
-      "c": "#ff0000"
+      "x": 0.75,
+      "c": "#cccccc",
+      "f": 2,
+      "w": 3,
+      "d": true
+    },
+    "<p>sus+ + rel+ > rel=decay on/off <p>sus- + rel- > rel=decay on/off",
+    {
+      "c": "#ff0000",
+      "f": 3
     },
     "back",
     {
@@ -462,9 +470,16 @@
   ],
   [
     {
-      "x": 3,
+      "c": "#cccccc",
+      "f": 2,
+      "w": 3,
+      "d": true
+    },
+    "<p>param+st* > edit  <p>page+st* > stop ; st* > mute  <p>param+page > play/pause <p>param+page+st* > press for load / long press for save",
+    {
       "c": "#ff0000",
-      "a": 4
+      "a": 4,
+      "f": 3
     },
     "param\n\n\nstep edit",
     {

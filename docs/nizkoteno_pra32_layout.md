@@ -118,8 +118,8 @@ eg.attk+, eg.decay+, eg.sus+, eg.rel+
 eg.attk-, eg.decay-, eg.sus-, eg.rel-
                      back,    page
 
-"eg.sus+" + "eg.rel+" > eg.rel=decay on/off
-"eg.sus-" + "eg.rel-" > eg.rel=decay on/off
+<p>sus+ + rel+ > rel=decay on/off
+<p>sus- + rel- > rel=decay on/off
 
 #### eg_page2
 
@@ -194,11 +194,10 @@ st1, st2, st3, st4,
 st5, st6, st7, st8
                param,  page
 
-param+st* > enter edit step
-page+st* > stop step (sequence resets to step 1 before reaching this step)
-st* > mute step
-param+page > play/pause
-f1+f2+st* > short press for load, long press for save 
+<p>param+st* > edit 
+<p>page+st* > stop ; st* > mute 
+<p>param+page > play/pause
+<p>param+page+st* > press for load / long press for save
 
 
 ---
