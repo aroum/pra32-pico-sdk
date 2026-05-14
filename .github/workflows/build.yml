@@ -47,10 +47,11 @@ jobs:
         shell: bash
         run: |
           # 1. Locate the ELF file (Pico-Build-Action typically places it in the build folder)
-          ELF_FILE=$(find build -name "*.elf" | head -n 1)
+          ELF_FILE=$(find . -maxdepth 3 -name "${{ matrix.board }}.elf" | head -n 1)
           
           if [ -z "$ELF_FILE" ]; then
-            echo "Error: ELF file not found!"
+            echo "Error: ELF file for ${{ matrix.board }} not found!"
+            ls -R 
             exit 1
           fi
 
@@ -101,6 +102,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: firmware-${{ matrix.board }}
+          # Pico-Build-Action по умолчанию складывает всё в папку output или в корень
+          # Используем поиск по маске в текущей директории
           path: |
-            build_${{ matrix.board }}/*.uf2
-            build_${{ matrix.board }}/*.elf
+            **/${{ matrix.board }}.uf2
+            **/${{ matrix.board }}.elf
